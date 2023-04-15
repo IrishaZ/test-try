@@ -5,30 +5,34 @@ const chaiSubset = require('chai-subset');
 chai.use(chaiSubset);
 const expect=chai.expect;
 const casual=require('casual');
+const clientAddress= require("../src/client/address")
+
 
 describe ("Test adress endpoints", () =>{
 let token;
+let userId;
+let userAddresses;
+const reqBody= {
+  email: "userprod@email.com",
+  password: "Password1"
+}
+
 beforeEach(async ()=>{
-    //login with 
-    const reqBody= {
-        email: "userprod@email.com",
-        password: "Password1"
-      }
+    //login with
     try {
         const response= await superagent.post(baseUrl+"/auth/login").send(reqBody);
         token= response.body.token;
-    } catch (error) { 
+        userId=response.body.user.id
+    } catch (error) {
         console.log("Catch message: ", error.message)
     }
 });
-it ("Should  test log in, getting the token",()=>{
+  it ("Should  test log in, getting the token",()=>{
     console.log(token)})
 
-it ("Should add the address to user", async()=>{
+  // Lesson 15
+  it ("Should add the address to user", async()=>{
     const {street,city,state,country}=casual;
-       // const street = casual.street;
-        // const city = casual.city;
-        // const state = casual.state;
     const zip = casual.zip(5);
     const addressOpt= {
         isDefault: true,
@@ -38,19 +42,18 @@ it ("Should add the address to user", async()=>{
         country: country,
         zipCode: zip
       }
-      console.log (addressOpt);
-      let response;
-      try {
-        response= await superagent.post(baseUrl+"/address/add").
-        set({
-            Authorization:token
-            })
-            .send(addressOpt);
-    } catch (error) {
+    let response;
+    const opts={
+        token,
+        address: addressOpt
+      }
+ 
+    try {
+        response= await clientAddress.addAddress(opts)
+        } catch (error) {
         console.log("Catch message: ", error.message)        
-    }
-        console.log(response.body);
-        expect(response.body).to.containSubset(
+                          }
+      expect(response.body).to.containSubset(
         {       success: true,
                 message: 'Address has been added successfully!',
                 address: {
@@ -60,7 +63,7 @@ it ("Should add the address to user", async()=>{
                   state: state,
                   country: country,
                   zipCode: zip,
-                  user: '63e533a79d6cab00365d83fe',
+                  user: userId,
                   __v: 0}
           }
     )    

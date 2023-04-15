@@ -7,10 +7,14 @@
 const superagent=require('superagent');
 let baseUrl="https://mern-ecommerce.sdet.school/api";
 const addAddress = (opts)=>{
+    let response;
     const authHeader={Authorization:opts.token}
-    if(opts.token===nul){
+    if(opts.token===null){
         throw new Error("addAddress token required param")
     }
     return superagent.post(baseUrl+"/address/add").set(authHeader).send(opts.address);
+    // response = await superagent.post(baseUrl+"/address/add").set(authHeader).send(opts.address);
+    return response.body
 }
+
 module.exports={addAddress}

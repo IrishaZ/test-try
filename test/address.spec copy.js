@@ -31,41 +31,41 @@ beforeEach(async ()=>{
     console.log(token)})
 
   // Lesson 15
-  it ("Should add the address to user", async()=>{
-    const {street,city,state,country}=casual;
-    const zip = casual.zip(5);
-    const addressOpt= {
-        isDefault: true,
-        address: street,
-        city: city,
-        state: state,
-        country: country,
-        zipCode: zip
-      }
-    let response;
-    const opts={
-        token,
-        address: addressOpt
-      }
- 
-    try {
-        response= await clientAddress.addAddress(opts)
-        } catch (error) {
-        console.log("Catch message: ", error.message)        
-                          }
-      expect(response.body).to.containSubset(
-        {       success: true,
-                message: 'Address has been added successfully!',
-                address: {
-                  isDefault: true,
-                  address:street,
-                  city: city,
-                  state: state,
-                  country: country,
-                  zipCode: zip,
-                  user: userId,
-                  __v: 0}
+  it("should add address to user",async () =>{
+        const {street,city,state} = casual;
+        const zip = casual.zip(5)
+        const addressOpt = {
+          isDefault: true,
+          address: street,
+          city: city,
+          state: state,
+          country: "US",
+          zipCode: zip,
+        }
+        let response
+        const opts = {
+          token,
+          address: addressOpt
+        }
+        try {
+          response = await clientAddress.addAddress(opts)
+        } catch(err){
+          console.log(err.message)
+        }
+        console.log(response);
+        expect(response.body).to.containSubset({
+          success: true,
+          message: 'Address has been added successfully!',
+          address: {
+            isDefault: true,
+            address: street,
+            city: city,
+            state: state,
+            country: 'US',
+            zipCode: zip,
+            user: userId,
+            __v: 0
           }
-    )    
-})
+        });
+      })
 })

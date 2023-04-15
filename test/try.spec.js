@@ -79,26 +79,9 @@ describe("Get product by slug name", ()=>{
 })
 
 
-const superagent = require('superagent');
-
-async function getUser() {
-  try {
-    const res = await superagent
-      .get('https://api.example.com/user')
-      .query({ name: 'John', age: 30 })
-      .set('Accept', 'application/json');
-    
-    console.log(res.body);
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-getUser();
-
 // homework lesson 12
  describe('Testing category',()=>
- {it (describe(' Testing getting a products by id'), async ()=>{
+ {it (' Testing getting a products by id', async ()=>{
 try{ 
   const result = await superagent.get('https://mern-ecommerce.sdet.school/api/category/63a52860873c300037f22dfd');
   console.log(result);

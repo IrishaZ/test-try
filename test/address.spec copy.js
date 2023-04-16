@@ -32,14 +32,14 @@ beforeEach(async ()=>{
 
   // Lesson 15
   it("should add address to user",async () =>{
-        const {street,city,state} = casual;
+        const {street,city,state, country} = casual;
         const zip = casual.zip(5)
         const addressOpt = {
           isDefault: true,
           address: street,
           city: city,
           state: state,
-          country: "US",
+          country: country,
           zipCode: zip,
         }
         let response
@@ -61,7 +61,7 @@ beforeEach(async ()=>{
             address: street,
             city: city,
             state: state,
-            country: 'US',
+            country: country,
             zipCode: zip,
             user: userId,
             __v: 0

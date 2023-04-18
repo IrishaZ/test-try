@@ -7,7 +7,7 @@ const expect=chai.expect;
 const casual=require('casual');
 const clientAddress= require("../src/client/address");
 const clientAuth= require("../src/client/auth");
-
+const {User} =require('../src/user/user')
 
 describe ("Test adress endpoints", () =>{
 let token;
@@ -18,18 +18,18 @@ const reqBody= {
   password: "Password1"
 }
 
-beforeEach(async ()=>{
-    //login with
-    try {
-        const response= await clientAuth.login(reqBody);
-        token= response.body.token;
-        userId=response.body.user.id
-    } catch (error) {
-        console.log("Catch message: ", error.message)
-    }
-});
-  it ("Should  test log in, getting the token",()=>{
-    console.log(token)})
+// beforeEach(async ()=>{
+//     //login with
+//     try {
+//         const response= await clientAuth.login(reqBody);
+//         token= response.body.token;
+//         userId=response.body.user.id
+//     } catch (error) {
+//         console.log("Catch message: ", error.message)
+//     }
+// });
+//   it ("Should  test log in, getting the token",()=>{
+//     console.log(token)})
 
 
 //  it("should add address to user",async () =>{
@@ -87,6 +87,11 @@ beforeEach(async ()=>{
 //     } catch (error) {throw new Error("User with this email is already exist ")
 //     }
 //   })
+// lesson15
+it.only ('should create a new User',async()=>{
+  const user=new User();
+  await user.register();
+})
   
 //homework 14
 it('Should get user addresses',async()=>{
